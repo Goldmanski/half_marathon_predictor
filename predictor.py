@@ -22,9 +22,9 @@ DO_SPACES_ENDPOINT = os.getenv("DO_SPACES_ENDPOINT")
 s3 = boto3.client(
     "s3",
     region_name=DO_SPACES_REGION,
-     endpoint_url=DO_SPACES_ENDPOINT,
-     aws_access_key_id=DO_SPACES_KEY,
-     aws_secret_access_key=DO_SPACES_SECRET,
+    endpoint_url=DO_SPACES_ENDPOINT,
+    aws_access_key_id=DO_SPACES_KEY,
+    aws_secret_access_key=DO_SPACES_SECRET,
 )
 
 def load_model():
@@ -45,8 +45,4 @@ def load_model():
     model = joblib.load(model_path)
 
     return model
-
-#if __name__ == "__main__":
-    #model = load_model()
-    #print(type(model))
 
