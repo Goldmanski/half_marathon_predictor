@@ -8,7 +8,7 @@ load_dotenv()
 langfuse = Langfuse(
     public_key=os.getenv("LANGFUSE_PUBLIC_KEY"),
     secret_key=os.getenv("LANGFUSE_SECRET_KEY"),
-    base_url=os.getenv("LANGFUSE_BASE_URL"),
+    host=os.getenv("LANGFUSE_BASE_URL"),
 )
 
 if __name__ == "__main__":

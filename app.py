@@ -3,7 +3,6 @@ import streamlit as st
 from llm import parse_runner_data
 from predictor import load_model
 from utils import predict_halfmarathon_time
-from langfuse_client import langfuse
 
 @st.cache_resource
 def get_model():
@@ -35,10 +34,6 @@ user_message = st.text_area(
 
 if st.button("Przewiduj"):
 
-    trace = langfuse.trace(
-        name="half-marathon-prediction"
-    )
-
     runner = parse_runner_data(user_message)
 
     if runner.missing_fields:
@@ -65,16 +60,5 @@ if st.button("Przewiduj"):
     st.write(f"Czas na 5 km: {runner.czas_5km_sek} sek")
 
     st.success(f"🏁 Przewidywany czas: {pred_time}")
-
-    trace.update(
-        output={
-            "prediction": pred_time,
-            "age": runner.wiek,
-            "gender": runner.plec,
-            "time_5km_seconds": runner.czas_5km_sek,
-        }
-    )
-
-    langfuse.flush()
 
     

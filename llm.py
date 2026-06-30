@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from pydantic import BaseModel, Field
 import instructor
+from langfuse_client import langfuse
 
 load_dotenv()
 
@@ -17,12 +18,9 @@ class RunnerData(BaseModel):
     czas_5km_sek: int | None = None
     missing_fields: list[str] = Field(default_factory=list)
 
-def parse_runner_data(user_message: str):
-    response = client.chat.completions.create(
-        model="gpt-4.1-mini",
-        response_model=RunnerData,
-        temperature=0,
-        messages=[
+def parse_runner_data(user_message: str):    
+
+    messages = [
             {
                 "role": "system",
                 "content": (
@@ -38,8 +36,37 @@ def parse_runner_data(user_message: str):
                 "content": user_message
             }
         ]
+    
+    trace = langfuse.trace(
+        name="half-marathon-predicton",
+        input=messages,
     )
 
+    span = trace.span(
+        name="runner-data-extraction",
+        input={"user_message": user_message},
+    )
+
+    generation = span.generation(
+        name="llm-parser",
+        model="gpt-4.1-mini",
+        input=messages,
+    )
+
+    response = client.chat.completions.create(
+        model="gpt-4.1-mini",
+        response_model=RunnerData,
+        temperature=0,
+        messages=messages,
+    )
+
+    generation.end(
+        output=response.model_dump(),
+    )
+
+    langfuse.flush()
+
+    
     return response
     
 if __name__ == "__main__":
