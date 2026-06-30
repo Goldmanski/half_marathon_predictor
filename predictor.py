@@ -9,7 +9,7 @@ from pathlib import Path
 #zmienne srodowiskowe
 load_dotenv()
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 MODELS_DIR = BASE_DIR / "models"
 
 DO_SPACES_KEY = os.getenv("DO_SPACES_KEY")
@@ -32,8 +32,10 @@ def load_model():
     Pobiera model z DigitalOcean Spaces i zwraca załadowany model.
     """
 
-    model_path = MODELS_DIR / "halfmarathon_linear_regression.pkl"
+    MODELS_DIR.mkdir(parents=True, exist_ok=True)
 
+    model_path = MODELS_DIR / "halfmarathon_linear_regression.pkl"
+    
     s3.download_file(
         Bucket=DO_SPACES_BUCKET,
         Key="models/halfmarathon_linear_regression.pkl",
@@ -44,7 +46,7 @@ def load_model():
 
     return model
 
-if __name__ == "__main__":
-    model = load_model()
-    print(type(model))
+#if __name__ == "__main__":
+    #model = load_model()
+    #print(type(model))
 
