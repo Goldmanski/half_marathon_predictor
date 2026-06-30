@@ -1,0 +1,10 @@
+streamlit
+openai
+instructor
+langfuse
+python-dotenv
+boto3
+pandas
+numpy
+scikit-learn
+joblib
