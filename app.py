@@ -4,22 +4,19 @@ from llm import parse_runner_data
 from predictor import load_model
 from utils import predict_halfmarathon_time
 
+st.set_page_config(page_title="Half Marathon Predictor")
+
 @st.cache_resource
 def get_model():
     return load_model()
 
-        
 model = get_model()
-
 
 FIELD_NAMES = {
         "plec": "płeć",
         "wiek": "wiek",
         "czas_5km_sek": "czas na 5 km"
     }
-
-
-st.set_page_config(page_title="Half Marathon Predictor")
 
 st.title("🏃 Half Marathon Predictor")
 
