@@ -4,11 +4,13 @@ AI-powered application that predicts half marathon finish time based on natural 
 
 ## 🚀 Live Demo
 
-https://half-marathon-predictor.streamlit.app/
+[https://half-marathon-predictor.streamlit.app](https://half-marathon-predictor.streamlit.app)
 
 The application allows users to describe a runner in natural language and receive an estimated half marathon finish time based on their age, gender, and 5 km performance.
 
-## 📸 Screenshots
+---
+
+# 📸 Screenshots
 
 ### Main Application
 
